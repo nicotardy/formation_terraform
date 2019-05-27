@@ -7,3 +7,9 @@ terraform.tfstate
 
 # test
 monfic.txt
+
+# Python
+__pycache__/
+*.pyc
+venv
+.env
