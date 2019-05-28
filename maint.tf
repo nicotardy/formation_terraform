@@ -19,6 +19,7 @@ resource "aws_internet_gateway" "igw" {
     Name = "igw"
   }
 }
+
 /*
 resource "aws_subnet" "priv_sbnt1" {
   vpc_id     = "${aws_vpc.lab_nta.id}"
@@ -50,6 +51,7 @@ resource "aws_route_table_association" "pub_sbnt1_rt_assoc" {
 
 resource "aws_route_table" "pub_sbnt1_rt" {
   vpc_id = "${aws_vpc.lab_nta.id}"
+
   tags = {
     Name = "lab_nta"
     Name = "rt"
@@ -61,7 +63,6 @@ resource "aws_route" "pub_sbnt1_rt_igw" {
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = "${aws_internet_gateway.igw.id}"
 }
-
 
 resource "local_file" "myfile" {
   content  = "hello Nico !"
