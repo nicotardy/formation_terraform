@@ -33,23 +33,34 @@ resource "aws_subnet" "priv_sbnt1" {
 }
 */
 
-resource "aws_subnet" "pub_sbnt1" {
+resource "aws_subnet" "subnet" {
+  count             = 2
+  availability_zone = "${element(var.azs, count.index)}"
+
   vpc_id     = "${aws_vpc.lab_nta.id}"
-  cidr_block = "${var.root_cidr}.2.0/24"
+  cidr_block = "${var.root_cidr}.${count.index+1}.0/24"
 
   tags = {
     Name = "lab_nta"
-    Name = "sbnt"
-    Name = "pub"
+    Name = "subnet-${count.index}"
   }
 }
 
-resource "aws_route_table_association" "pub_sbnt1_rt_assoc" {
-  subnet_id      = "${aws_subnet.pub_sbnt1.id}"
-  route_table_id = "${aws_route_table.pub_sbnt1_rt.id}"
+resource "aws_route_table_association" "subnet_rt_assoc" {
+  count = 2
+
+  subnet_id      = "${element(aws_subnet.subnet.*.id, count.index)}"
+  route_table_id = "${aws_route_table.subnet_rt.id}"
+
+/*
+  tags = {
+    Name = "lab_nta"
+    Name = "subnet_rt_assoc-${count.index}"
+  }
+*/
 }
 
-resource "aws_route_table" "pub_sbnt1_rt" {
+resource "aws_route_table" "subnet_rt" {
   vpc_id = "${aws_vpc.lab_nta.id}"
 
   tags = {
@@ -58,8 +69,8 @@ resource "aws_route_table" "pub_sbnt1_rt" {
   }
 }
 
-resource "aws_route" "pub_sbnt1_rt_igw" {
-  route_table_id         = "${aws_route_table.pub_sbnt1_rt.id}"
+resource "aws_route" "subnet_rt_igw" {
+  route_table_id         = "${aws_route_table.subnet_rt.id}"
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = "${aws_internet_gateway.igw.id}"
 }
