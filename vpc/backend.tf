@@ -1,0 +1,7 @@
+terraform {
+  backend "s3" {
+    bucket = "lab-nta-tfstate-bucket"
+    key    = "vpc/terraform.tfstate"
+    region = "eu-west-1"
+  }
+}
