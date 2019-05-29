@@ -13,3 +13,7 @@ variable "subnets" {
   type    = "list"
   default = ["subnet1", "subnet2"]
 }
+variable "subnets_ip" {
+  type    = "list"
+  default = ["10.0", "1.0"]
+}

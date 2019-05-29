@@ -38,7 +38,7 @@ resource "aws_subnet" "subnet" {
   availability_zone = "${element(var.azs, count.index)}"
 
   vpc_id     = "${aws_vpc.lab_nta.id}"
-  cidr_block = "${var.root_cidr}.${count.index+1}.0/24"
+  cidr_block = "${var.root_cidr}.${element(var.subnets_ip, count.index)}/24"
 
   tags = {
     Name = "lab_nta"
