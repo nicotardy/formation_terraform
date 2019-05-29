@@ -1,4 +1,3 @@
-
 output "filename" {
   value = "${local_file.myfile.filename}"
 }
@@ -22,7 +21,6 @@ output "subnet_id" {
 output "subnet_arn" {
   value = ["${aws_subnet.subnet.*.arn}"]
 }
-
 
 output "rt_association" {
   value = ["${aws_route_table_association.subnet_rt_assoc.*.id}"]

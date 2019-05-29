@@ -52,7 +52,7 @@ resource "aws_route_table_association" "subnet_rt_assoc" {
   subnet_id      = "${element(aws_subnet.subnet.*.id, count.index)}"
   route_table_id = "${aws_route_table.subnet_rt.id}"
 
-/*
+  /*
   tags = {
     Name = "lab_nta"
     Name = "subnet_rt_assoc-${count.index}"
